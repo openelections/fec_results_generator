@@ -18,16 +18,28 @@ module FecResultsGenerator
       create_dir(year, 'summary')
       ['party_labels', 'general_election_votes','general_election_votes_by_party','congressional_votes_by_election','chamber_votes_by_party'].each do |method|
         begin
-          run(method, fec_results)
+          run(method, fec_results, 'summary')
         rescue NotImplementedError
           next
         end
       end
     end
     
-    def run(method, fec_results)
+    def president
+      fec_results = FecResults::President.new(:year => year)
+      create_dir(year, 'president')
+      ['popular_vote_summary', 'state_electoral_and_popular_vote_summary', 'primary_party_summary', 'general_election_results', 'primary_election_results'].each do |method|
+        begin
+          run(method, fec_results, 'president')
+        rescue NotImplementedError
+          next
+        end
+      end
+    end
+    
+    def run(method, fec_results, type)
       data = generate_json(fec_results.send(method))
-      write_to_file("api/#{year}/summary","#{method}.json", data.map{|d| d['table'].to_json})
+      write_to_file("api/#{year}/#{type}","#{method}.json", data.map{|d| d['table'].to_json})
     end
         
     def generate_json(results)
