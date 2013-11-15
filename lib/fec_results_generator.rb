@@ -31,15 +31,26 @@ module FecResultsGenerator
       ['popular_vote_summary', 'state_electoral_and_popular_vote_summary', 'primary_party_summary', 'general_election_results', 'primary_election_results'].each do |method|
         begin
           run(method, fec_results, 'president')
-        rescue
+        rescue NotImplementedError, NoMethodError
           next
         end
       end
     end
     
+    def congress
+      fec_results = FecResults::Congress.new(:year => year)
+      create_dir(year, 'congress')
+      run_congress('results', fec_results, 'congress')
+    end
+    
     def run(method, fec_results, type)
       data = generate_json(fec_results.send(method))
       write_to_file("api/#{year}/#{type}","#{method}.json", data.map{|d| d['table'].to_json})
+    end
+    
+    def run_congress(method, fec_results, type)
+      data = generate_json(fec_results.send(method))
+      write_to_file("api/#{year}/#{type}","#{method}.json", data.map{|d| d.to_json})
     end
         
     def generate_json(results)
