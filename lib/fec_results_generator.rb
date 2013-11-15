@@ -31,7 +31,7 @@ module FecResultsGenerator
       ['popular_vote_summary', 'state_electoral_and_popular_vote_summary', 'primary_party_summary', 'general_election_results', 'primary_election_results'].each do |method|
         begin
           run(method, fec_results, 'president')
-        rescue NotImplementedError
+        rescue
           next
         end
       end
