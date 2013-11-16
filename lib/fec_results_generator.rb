@@ -20,7 +20,7 @@ module FecResultsGenerator
         begin
           run(method, fec_results, 'summary')
         rescue NotImplementedError
-          next
+          run_empty(method, 'summary')
         end
       end
     end
@@ -32,14 +32,14 @@ module FecResultsGenerator
         begin
           run(method, fec_results, 'president')
         rescue NotImplementedError, NoMethodError
-          next
+          run_empty(method, 'president')
         end
       end
       ['general_election_results', 'primary_election_results'].each do |method|
         begin
           run_results(method, fec_results, 'president')
         rescue NotImplementedError, NoMethodError
-          next
+          run_empty(method, 'president')
         end
       end
     end
@@ -62,6 +62,10 @@ module FecResultsGenerator
         
     def generate_json(results)
       data = results.map{|r| JSON.parse(r.to_json)}
+    end
+    
+    def run_empty(method, type)
+      write_to_file("api/#{year}/#{type}","#{method}.json", [])
     end
     
     def write_to_file(dir, file, json)
