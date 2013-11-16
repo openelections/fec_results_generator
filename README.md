@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-In `irb`, create an instance of the JSONGenerator class:
+In `irb`, create an instance of the JsonGenerator class:
 
 ```ruby
 g = FecResultsGenerator::JsonGenerator.new(:year => 2000)
@@ -26,6 +26,14 @@ g.congress  # for congressional results
 g.president # for presidential results
 g.summary  # for vote totals
 ```
+
+This will create the following directories and files:
+
+api/2000/congress
+api/2000/president
+api/2000/summary
+
+with one or more files in each. The same directories and files are created for any even-numbered year between 2000 and 2012.
 
 
 ## Contributing
