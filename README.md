@@ -1,6 +1,6 @@
 # FecResultsGenerator
 
-TODO: Write a gem description
+A Ruby gem that takes Federal Election Commission election results as retrieved by the FecResults gem and generates JSON files in a directory structure, suitable for producting a static API. You can see an example of the data at the [FecResults site](http://openelections.github.io/fec_results/api/2012/summary/general_election_votes.json).
 
 ## Installation
 
@@ -18,7 +18,15 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+In `irb`, create an instance of the JSONGenerator class:
+
+```ruby
+g = FecResultsGenerator::JsonGenerator.new(:year => 2000)
+g.congress  # for congressional results
+g.president # for presidential results
+g.summary  # for vote totals
+```
+
 
 ## Contributing
 
