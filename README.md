@@ -2,6 +2,8 @@
 
 A Ruby gem that takes Federal Election Commission election results as retrieved by the FecResults gem and generates JSON files in a directory structure, suitable for producting a static API. You can see an example of the data at the [FecResults site](http://openelections.github.io/fec_results/api/2012/summary/general_election_votes.json).
 
+The resulting JSON API is designed to be used as both a reference for House, Senate and Presidential election results and also as a reconciliation service for connecting results produced by state authorities with federal data such as FEC candidate ids.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -30,10 +32,12 @@ g.summary  # for vote totals
 This will create the following directories and files:
 
 api/2000/congress
+
 api/2000/president
+
 api/2000/summary
 
-with one or more files in each. The same directories and files are created for any even-numbered year between 2000 and 2012.
+with one or more files in each. The same directories and files are created for any even-numbered year between 2000 and 2012. Some years do not have all of the data that others; those files are still generated but are empty arrays.
 
 
 ## Contributing
